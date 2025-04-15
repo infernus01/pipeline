@@ -781,11 +781,12 @@ func extractContainerFailureMessage(logger *zap.SugaredLogger, status corev1.Con
 			}
 		}
 		if term.ExitCode != 0 {
-			return fmt.Sprintf("%q exited with code %d", status.Name, term.ExitCode)
+			// Include the termination reason
+			return fmt.Sprintf("%q exited with code %d: %s", status.Name, term.ExitCode, term.Reason)
 		}
 	}
 
-	return ""
+	return "" 
 }
 
 // IsPodExceedingNodeResources returns true if the Pod's status indicates there
